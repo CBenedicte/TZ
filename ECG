@@ -1,0 +1,310 @@
+clear all; close all; clc;
+%%Import des valeurs du fichier HRV_ECG
+R=readtable('Relaxation HRV_ECG'); %Ensemble des données correspondant à la phase de relaxation
+Rhf_WT_norm=R.hf_WT_norm; 
+Rlf_WT_norm=R.lf_WT_norm;
+Rlf_hf_WT_norm=R.lf_hf_WT_norm; 
+Rhf_WT=R.hf_WT; 
+Rlf_WT=R.lf_WT; 
+Rlf_hf_WT=R.lf_hf_WT; 
+Rrmssd=R.rmssd; 
+Rsdnn=R.sdnn;
+Rsdsd=R.sdsd;
+Rnn50=R.nn50; 
+Rpnn50=R.pnn50;
+Rmrri=R.mrri; 
+Rmhr=R.mhr;
+Rsd1=R.sd1; 
+Rsd2=R.sd2; 
+Rtotal_power=R.total_power;
+Rvlf=R.vlf; 
+Rlf=R.lf; 
+Rhf=R.hf; 
+Rlf_hf=R.lf_hf;
+Rlfnu=R.lfnu; 
+Rhfnu=R.hfnu; 
+
+S=readtable('Stress HRV_ECG');%Ensemble des données correspondant à la phase de stress
+Shf_WT_norm=S.hf_WT_norm; 
+Slf_WT_norm=S.lf_WT_norm;
+Slf_hf_WT_norm=S.lf_hf_WT_norm; 
+Shf_WT=S.hf_WT; 
+Slf_WT=S.lf_WT; 
+Slf_hf_WT=S.lf_hf_WT; 
+Srmssd=S.rmssd; 
+Ssdnn=S.sdnn;
+Ssdsd=S.sdsd;
+Snn50=S.nn50; 
+Spnn50=S.pnn50;
+Smrri=S.mrri; 
+Smhr=S.mhr;
+Ssd1=S.sd1; 
+Ssd2=S.sd2; 
+Stotal_power=S.total_power;
+Svlf=S.vlf; 
+Slf=S.lf; 
+Shf=S.hf; 
+Slf_hf=S.lf_hf;
+Slfnu=S.lfnu; 
+Shfnu=S.hfnu; 
+
+F=readtable('Repos HRV_ECG'); %Ensemble des données correspondant à la phase de rétablissement
+Fhf_WT_norm=F.hf_WT_norm; 
+Flf_WT_norm=F.lf_WT_norm;
+Flf_hf_WT_norm=F.lf_hf_WT_norm; 
+Fhf_WT=F.hf_WT; 
+Flf_WT=F.lf_WT; 
+Flf_hf_WT=F.lf_hf_WT; 
+Frmssd=F.rmssd; 
+Fsdnn=F.sdnn;
+Fsdsd=F.sdsd;
+Fnn50=F.nn50; 
+Fpnn50=F.pnn50;
+Fmrri=F.mrri; 
+Fmhr=F.mhr;
+Fsd1=F.sd1; 
+Fsd2=F.sd2; 
+Ftotal_power=F.total_power;
+Fvlf=F.vlf; 
+Flf=F.lf; 
+Fhf=F.hf; 
+Flf_hf=F.lf_hf;
+Flfnu=F.lfnu; 
+Fhfnu=F.hfnu; 
+
+%Visualisation de l'ensemble des données sous forme d'histogramme
+disp('Tracé des histogrammes'); 
+figure
+histogram(Rhf_WT_norm);
+xlabel('hf_WT_norm'), ylabel('Effectif'),title('Histogramme des valeurs de hf_WT_norm');
+hold on 
+histogram(Shf_WT_norm);
+hold on
+histogram(Fhf_WT_norm);
+legend('Relaxation', 'Stress', 'Repos'); 
+
+figure
+histogram(Rlf_WT_norm);
+xlabel('lf_WT_norm'), ylabel('Effectif'),title('Histogramme des valeurs de lf_WT_norm');
+hold on 
+histogram(Slf_WT_norm);
+hold on
+histogram(Flf_WT_norm);
+legend('Relaxation', 'Stress', 'Repos'); 
+
+figure
+histogram(Rlf_hf_WT_norm);
+xlabel('lf_hf_WT_norm'), ylabel('Effectif'),title('Histogramme des valeurs de lf_hf_WT_norm');
+hold on 
+histogram(Slf_hf_WT_norm);
+hold on
+histogram(Flf_hf_WT_norm);
+legend('Relaxation', 'Stress', 'Repos'); 
+
+figure
+histogram(Rhf_WT);
+xlabel('hf_WT'), ylabel('Effectif'),title('Histogramme des valeurs de hf_WT');
+hold on 
+histogram(Shf_WT);
+hold on
+histogram(Fhf_WT);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rlf_WT);
+xlabel('lf_WT'), ylabel('Effectif'),title('Histogramme des valeurs de lf_WT');
+hold on 
+histogram(Slf_WT);
+hold on
+histogram(Flf_WT);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rlf_hf_WT);
+xlabel('lf_hf_WT'), ylabel('Effectif'),title('Histogramme des valeurs de lf_hf_WT');
+hold on 
+histogram(Slf_hf_WT);
+hold on
+histogram(Flf_hf_WT);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rrmssd);
+xlabel('rmssd'), ylabel('Effectif'),title('Histogramme des valeurs de rmssd');
+hold on 
+histogram(Srmssd);
+hold on
+histogram(Frmssd);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rsdnn);
+xlabel('sdnn'), ylabel('Effectif'),title('Histogramme des valeurs de sdnn');
+hold on 
+histogram(Ssdnn);
+hold on
+histogram(Fsdnn);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rsdsd);
+xlabel('sdsd'), ylabel('Effectif'),title('Histogramme des valeurs de sdsd');
+hold on 
+histogram(Ssdsd);
+hold on
+histogram(Fsdsd);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rnn50);
+xlabel('nn50'), ylabel('Effectif'),title('Histogramme des valeurs de nn50');
+hold on 
+histogram(Snn50);
+hold on
+histogram(Fnn50);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rpnn50);
+xlabel('pnn50'), ylabel('Effectif'),title('Histogramme des valeurs de pnn50');
+hold on 
+histogram(Spnn50);
+hold on
+histogram(Fpnn50);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rmrri);
+xlabel('mrri'), ylabel('Effectif'),title('Histogramme des valeurs de mrri');
+hold on 
+histogram(Smrri);
+hold on
+histogram(Fmrri);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Fmhr);
+xlabel('mhr'), ylabel('Effectif'),title('Histogramme des valeurs de mhr');
+hold on 
+histogram(Smhr);
+hold on
+histogram(Fmhr);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rsd1);
+xlabel('sd1'), ylabel('Effectif'),title('Histogramme des valeurs de sd1');
+hold on 
+histogram(Ssd1);
+hold on
+histogram(Fsd1);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rsd2);
+xlabel('sd2'), ylabel('Effectif'),title('Histogramme des valeurs de sd2');
+hold on 
+histogram(Ssd2);
+hold on
+histogram(Fsd2);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rtotal_power);
+xlabel('total_power'), ylabel('Effectif'),title('Histogramme des valeurs de total_power');
+hold on 
+histogram(Stotal_power);
+hold on
+histogram(Ftotal_power);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rvlf);
+xlabel('vlf'), ylabel('Effectif'),title('Histogramme des valeurs de vlf');
+hold on 
+histogram(Svlf);
+hold on
+histogram(Fvlf);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rlf);
+xlabel('lf'), ylabel('Effectif'),title('Histogramme des valeurs de lf');
+hold on 
+histogram(Slf);
+hold on
+histogram(Flf);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rhf);
+xlabel('hf'), ylabel('Effectif'),title('Histogramme des valeurs de hf');
+hold on 
+histogram(Shf);
+hold on
+histogram(Fhf);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rlf_hf);
+xlabel('lf_hf'), ylabel('Effectif'),title('Histogramme des valeurs de lf_hf');
+hold on 
+histogram(Slf_hf);
+hold on
+histogram(Flf_hf);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rlfnu);
+xlabel('lfnu'), ylabel('Effectif'),title('Histogramme des valeurs de lfnu');
+hold on 
+histogram(Slfnu);
+hold on
+histogram(Flfnu);
+legend('Relaxation', 'Stress', 'Repos');
+
+figure
+histogram(Rhfnu);
+xlabel('hfnu'), ylabel('Effectif'),title('Histogramme des valeurs de hfnu');
+hold on 
+histogram(Shfnu);
+hold on
+histogram(Fhfnu);
+legend('Relaxation', 'Stress', 'Repos');
+
+disp('Calcul de moyenne, variance et decart type')
+reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+%Boucle pour calculer en une seule fois la moyenne, la variance et l'écart
+%type
+while (reponse ==0 )
+    variable=input('Variables à traiter ?');
+    disp('La moyenne vaut :'); 
+    fprintf('%d\n', mean(variable));
+    disp('La variance vaut :');    
+    fprintf('%d\n',var(variable)); 
+    disp('Lécart type vaut :'); 
+    fprintf('%d\n', std(variable));
+    reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+end
+
+disp('Tracé des histogrammes') 
+reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+%Boucle pour tracer un histogramme à la fois
+while (reponse ==0 )
+    variable=input('Variables à traiter ?');
+    figure
+    histogram(variable);
+    xlabel('valeur'), ylabel('Effectif'),title('Histogramme ');
+    reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+end
+
+disp('Tracé des boxplot') 
+reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+%Boucle pour tracer un boxplot à la fois
+while (reponse ==0 )
+    variable=input('Variables à traiter ?');
+    figure
+    boxplot(variable);
+    ylabel('Valeur de variable'),title('Box plot de la valeur de variable');
+    reponse = input('Avez-vous fini ? (1=Oui, 0=Non)');
+end
